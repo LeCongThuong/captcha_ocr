@@ -3,5 +3,8 @@
 "img_width":200,
 "img_height": 50,
 "downsample_factor": 4,
-"train_size" : 0.8
+"train_size" : 0.8,
+"path_to_images": "",
+"data_shuffle":1,
+"batch_size": 64
 }
