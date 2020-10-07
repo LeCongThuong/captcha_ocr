@@ -14,10 +14,11 @@ class CaptchaDataset:
         self.image_path_list, self.labels, self.character_set, self.max_length = self.create_image_lists()
         self.char_to_num, self.num_to_char = create_dict_between_char_and_num(self.character_set)
 
-    def create_dataset(self, is_training=True):
+    def create_dataset(self):
         train_data, train_label, val_data, val_label = self.split_data()
         train_dataset = self.create_data_pipline(train_data, train_label)
         val_dataset = self.create_data_pipline(val_data, val_label)
+        return train_dataset, val_dataset
 
     def create_data_pipline(self, image_data, image_label):
         captcha_dataset = tf.data.Dataset.from_tensor_slices((image_data, image_label))
@@ -47,19 +48,18 @@ class CaptchaDataset:
 
         indices = np.arange(size)
 
-        if self.config.shuffle_data:
+        if self.config.data_shuffle:
             np.random.shuffle(indices)
-
-        num_train = self.config.train_size * size
-        train_data = self.image_path_list[indices[:num_train]]
-        train_label = self.labels[indices[:num_train]]
-        val_data = self.image_path_list[indices[num_train:]]
-        val_label = self.labels[indices[num_train:]]
+        num_train = int(self.config.train_size * size)
+        train_data = np.array(self.image_path_list)[indices[:num_train]]
+        train_label = np.array(self.labels)[indices[:num_train]]
+        val_data = np.array(self.image_path_list)[indices[num_train:]]
+        val_label = np.array(self.labels)[indices[num_train:]]
         return train_data, train_label, val_data, val_label
 
     def encode_single_sample(self, image_path, label):
         img = tf.io.read_file(image_path)
-        img = tf.io.decode_image(img, channels=1)
+        img = tf.image.decode_png(img, channels=1)
         img = tf.image.convert_image_dtype(img, tf.float32)
         img = tf.image.resize(img, [self.config.img_height, self.config.img_width])
         img = tf.transpose(img, perm=[1, 0, 2])
