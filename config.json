@@ -1,0 +1,7 @@
+{
+"batch_size": 16,
+"img_width":200,
+"img_height": 50,
+"downsample_factor": 4,
+"train_size" : 0.8
+}
