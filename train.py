@@ -27,6 +27,8 @@ def main():
         callbacks=callback_list,
     )
 
+    model.save(config.model_save_dir)
+
 
 if __name__ == '__main__':
     main()
