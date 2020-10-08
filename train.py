@@ -14,11 +14,11 @@ def main():
         print("missing or invalid arguments")
         exit(0)
     # create train and val dataset
-    captch_dataset = CaptchaDataset(config)
-    train_dataset, val_dataset = captch_dataset.create_dataset()
+    captcha_dataset = CaptchaDataset(config)
+    train_dataset, val_dataset = captcha_dataset.create_dataset()
     # Train the model
     model_object = CTCModel(config)
-    model = model_object.build_model(captch_dataset.character_set)
+    model = model_object.build_model(captcha_dataset.character_set)
     callback_list = model_object.callback()
     history = model.fit(
         train_dataset,

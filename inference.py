@@ -61,3 +61,6 @@ def decode_batch_predictions(pred, max_length, num_to_char):
         output_text.append(res)
     return output_text
 
+
+if __name__ == '__main__':
+    main()

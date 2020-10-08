@@ -28,7 +28,7 @@ class CTCModel:
                      (self.config.img_height // self.config.downsample_factor) * 64)
         x = layers.Reshape(target_shape=new_shape, name="reshape")(x)
         x = layers.Dense(64, activation="relu", name="dense1")(x)
-        x = layers.Dropout(0.2)(x)
+        x = layers.Dropout(self.config.dropout)(x)
 
         x = layers.Bidirectional(layers.LSTM(128, return_sequences=True, dropout=self.config.dropout))(x)
         x = layers.Bidirectional(layers.LSTM(64, return_sequences=True, dropout=self.config.dropout))(x)

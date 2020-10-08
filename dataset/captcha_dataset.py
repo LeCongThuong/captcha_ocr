@@ -55,6 +55,11 @@ class CaptchaDataset:
         train_label = np.array(self.labels)[indices[:num_train]]
         val_data = np.array(self.image_path_list)[indices[num_train:]]
         val_label = np.array(self.labels)[indices[num_train:]]
+        # print("Train data shape: ", train_data.shape)
+        # print("Train label shape: ", train_label.shape)
+        # print("Val data shape: ", val_data.shape)
+        # print("Val label shape: ", val_label.shape)
+
         return train_data, train_label, val_data, val_label
 
     def encode_single_sample(self, image_path, label):
