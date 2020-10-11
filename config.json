@@ -3,7 +3,7 @@
 "img_height": 50,
 "downsample_factor": 4,
 "num_kernels" : [32, 64],
-"train_size" : 0.8,
+"train_size" : 0.9,
 "path_to_images": "/home/may_0/Documents/research/captcha-ocr/data/captcha_images_v2",
 "data_shuffle":1,
 "batch_size": 64,

@@ -30,8 +30,8 @@ class CTCModel:
         x = layers.Dense(64, activation="relu", name="dense1")(x)
         x = layers.Dropout(self.config.dropout)(x)
 
-        x = layers.Bidirectional(layers.LSTM(128, return_sequences=True, dropout=self.config.dropout))(x)
-        x = layers.Bidirectional(layers.LSTM(64, return_sequences=True, dropout=self.config.dropout))(x)
+        x = layers.Bidirectional(layers.LSTM(128, return_sequences=True, dropout=0.25))(x)
+        x = layers.Bidirectional(layers.LSTM(64, return_sequences=True, dropout=0.25))(x)
 
         x = layers.Dense(len(characters_set) + 1, activation="softmax", name="dense2")(x)
         print("Shape of input_label: ", input_label.shape)
