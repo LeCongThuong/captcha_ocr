@@ -4,6 +4,7 @@ from utils import get_args, get_config_from_json
 import numpy as np
 from dataset.captcha_dataset import CaptchaDataset
 import matplotlib.pyplot as plt
+from tensorflow.keras import layers
 
 
 def main():
@@ -25,6 +26,17 @@ def main():
     # A utility function to decode the output of the network
     captch_dataset = CaptchaDataset(config)
     train_dataset, val_dataset = captch_dataset.create_dataset()
+    char_to_num_file_path = config.model_save_dir + '/char_to_num.txt'
+    num_to_char_file_path = config.model_save_dir + '/num_to_char.txt'
+    with open(char_to_num_file_path) as f:
+        char_to_num_list = f.read().splitlines()
+
+    with open(num_to_char_file_path) as f:
+        num_to_char_list = f.read().splitlines()
+
+    captch_dataset.char_to_num = layers.experimental.preprocessing.StringLookup(vocabulary=char_to_num_list)
+    captch_dataset.num_to_char = layers.experimental.preprocessing.StringLookup(vocabulary=num_to_char_list)
+
     for batch in val_dataset.take(1):
         batch_images = batch["image"]
         batch_labels = batch["label"]

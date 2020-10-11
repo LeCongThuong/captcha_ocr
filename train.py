@@ -28,6 +28,15 @@ def main():
     )
 
     model.save(config.model_save_dir)
+    char_to_num_file_path = config.model_save_dir + '/char_to_num.txt'
+    num_to_char_file_path = config.model_save_dir + '/num_to_char.txt'
+    with open(char_to_num_file_path, 'w') as f:
+        for item in captcha_dataset.char_to_num.get_vocabulary():
+            f.write("%s\n" % item)
+
+    with open(num_to_char_file_path, 'w') as f:
+        for item in captcha_dataset.num_to_char.get_vocabulary():
+            f.write("%s\n" % item)
 
 
 if __name__ == '__main__':
