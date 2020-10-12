@@ -43,7 +43,10 @@ def main():
         batch_images = batch["image"]
         batch_labels = batch["label"]
 
-        preds = model.predict(batch_images)
+        prediction_model = keras.models.Model(
+            model.get_layer(name="image").input, model.get_layer(name="dense2").output
+        )
+        preds = prediction_model.predict(batch_images)
         pred_texts = decode_batch_predictions(preds, captcha_dataset.max_length, captcha_dataset.num_to_char)
 
         orig_texts = []

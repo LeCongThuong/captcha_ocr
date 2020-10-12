@@ -34,8 +34,7 @@ class CTCModel:
         x = layers.Bidirectional(layers.LSTM(64, return_sequences=True, dropout=0.25))(x)
 
         x = layers.Dense(len(characters_set) + 1, activation="softmax", name="dense2")(x)
-        print("Shape of input_label: ", input_label.shape)
-        print("Shape of output: ", x.shape)
+
         # Add CTC layer for calculating CTC loss at each step
         output = CtcLayer(name="ctc_loss")(input_label, x)
         model = keras.models.Model(inputs=[input_img, input_label], outputs=output, name="ocr_model_v1")
